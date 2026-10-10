@@ -1,0 +1,103 @@
+# Cybersecurity Attack Model Configuration: Step 1.2
+# Project: Cyber-Economic Resilience Under Evolving Attacks
+# Dataset: Ausgrid Solar Home Electricity Dataset (299 Retained Prosumers)
+
+reproducibility:
+  master_seed: 42
+
+paths:
+  input_processed_parquet: "data/processed/ausgrid_solar_processed.parquet"
+  output_attacked_parquet: "data/processed/ausgrid_solar_attacked.parquet"
+  report_markdown: "outputs/attack_generation_report.md"
+
+phases:
+  phase_1:
+    name: "1_NORMAL"
+    day_start: 0
+    day_end: 364
+    date_start: "2010-07-01"
+    date_end: "2011-06-30"
+    attack_type: "NONE"
+  phase_2:
+    name: "2_SCALING"
+    day_start: 365
+    day_end: 600
+    date_start: "2011-07-01"
+    date_end: "2012-02-21"
+    attack_type: "SCALING"
+  phase_3:
+    name: "3_RAMP"
+    day_start: 601
+    day_end: 850
+    date_start: "2012-02-22"
+    date_end: "2012-10-27"
+    attack_type: "RAMP"
+  phase_4a:
+    name: "4A_REPLAY"
+    day_start: 851
+    day_end: 972
+    date_start: "2012-10-28"
+    date_end: "2013-02-26"
+    attack_type: "REPLAY"
+  phase_4b:
+    name: "4B_COORDINATED"
+    day_start: 973
+    day_end: 1095
+    date_start: "2013-02-27"
+    date_end: "2013-06-30"
+    attack_type: "COORDINATED"
+
+targeting:
+  episode_penetration_fraction: 0.20 # 20% of 299 prosumers = 59 prosumers per episode
+  target_channel_allocation:
+    gg_fraction: 0.40
+    gc_fraction: 0.40
+    both_fraction: 0.20
+
+duty_cycle:
+  # The 15-30% specification target represents GLOBAL ACTIVE INTERVAL COVERAGE:
+  # the proportion of half-hour time intervals in an attack phase containing at least one active episode.
+  # The prosumer-interval duty cycle represents total attacked observation volume (~4-5%),
+  # which theoretically equals episode_penetration_fraction (0.20) * global active interval coverage.
+  # For Phase 4B, attacks occur exclusively inside the 10:00-14:00 trading window, so coverage is additionally
+  # evaluated as the attack-day fraction (28.46% of days, strictly within the 15-30% day-level target).
+  target_interval_fraction_min: 0.15 # 15% minimum global active interval coverage
+  target_interval_fraction_max: 0.30 # 30% maximum global active interval coverage
+  episode_duration_intervals_min: 12 # 6 hours (within specification burst range 8 to 48 intervals = 4 to 24h)
+  episode_duration_intervals_max: 36 # 18 hours (within specification burst range 8 to 48 intervals = 4 to 24h)
+  inter_episode_gap_intervals_min: 48 # 24 hours spacing between consecutive global episodes
+  inter_episode_gap_intervals_max: 96 # 48 hours spacing (empirically guarantees 15-30% active interval coverage)
+
+parameters:
+  scaling:
+    down_min: 0.30
+    down_max: 0.80
+    up_min: 1.25
+    up_max: 2.00
+  ramp:
+    duration_intervals_min: 12 # 6 hours (within specification range 12 to 96 intervals)
+    duration_intervals_max: 36 # 18 hours (matches episode duration ceiling to maintain 15-30% coverage)
+    down_min: 0.40
+    down_max: 0.60
+    up_min: 1.40
+    up_max: 1.80
+  replay:
+    lag_candidates_days: [7, 14, 21]
+    negligible_deviation_threshold_kwh: 0.01
+  coordinated:
+    # 10:00 to 14:00 Trading Window: Native 0-indexed intervals 20 through 27 (8 half-hour slots).
+    # In Ausgrid nomenclature, interval 20 ends at 10:30, interval 27 ends at 14:00.
+    # Note on specification text: 'intervals 20 to 28' refers to Python slice [20:28] (length 8),
+    # meaning inclusive indices 20 through 27.
+    trading_window_intervals: [20, 21, 22, 23, 24, 25, 26, 27]
+    seller_up_min: 1.30
+    seller_up_max: 1.80
+    buyer_down_min: 0.40
+    buyer_down_max: 0.70
+
+constraints:
+  enforce_non_negativity: true
+  enforce_pv_inverter_capacity: true
+  preserve_nighttime_sensor_readings: true
+  enforce_no_artificial_gc_ceiling: true
+  enforce_single_primary_attack_per_observation: true

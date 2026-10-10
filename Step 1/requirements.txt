@@ -1,0 +1,6 @@
+# Step 1 Dependencies — Cyber-Economic Resilience Under Evolving Attacks
+pandas>=2.0.0
+numpy>=1.26.0
+pyarrow>=14.0.0
+pyyaml>=6.0.0
+python-dateutil>=2.8.2
