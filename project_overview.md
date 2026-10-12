@@ -39,16 +39,33 @@ To ensure scientific rigor and make debugging easier, the project is strictly se
     *   **Full Cohort Local Baseline (299 Local Models):** Train independent local models for all 299 prosumers and calculate the community's average Local F1 score to serve as the baseline comparison for Step 3.
     *   **Centralized AE (Upper Bound):** Pool all 299 prosumers' data into one central server and train a single model (breaks privacy, but defines the maximum theoretical detection ceiling).
 
-#### Step 3: Privacy-Aware Collaboration (Federated Learning) **[AI] & [Cybersecurity]** — [✅ COMPLETED]
-*   **Status:** Complete. Evaluated across all 299 prosumers under dual protocols (Protocol A & Protocol B) with 16 IEEE figures generated.
-*   **Input:** Local model weights from smart meters across the community. *(Note: 100% data locality; 0 bytes of raw telemetry exchanged).*
-*   **Action:** Deployed Federated Averaging (FedAvg). Virtual prosumer clients trained locally on their private smart meter readings, while the aggregation server coordinated weight averaging over 30 rounds.
-*   **Output:** Global federated model weights (`federated_conv2_A.pt`, `federated_conv2_B.pt`), comprehensive client scorecard CSVs, and 16 IEEE publication-quality figures (`Step 3/outputs/figures/`).
-*   **Empirical Findings Across All 299 Prosumers:**
-    *   **Federated vs. Local Superiority ($p = 4.10 \times 10^{-7}$):** Federated Learning significantly outperforms isolated Local defense, winning on 176/299 prosumers in Protocol A ($p < 0.001$) and 162/299 in Protocol B ($p = 0.009$).
-    *   **Near-Zero Privacy Penalty ($p = 0.601$):** Federated Learning matches the theoretical upper-bound Centralized model (13.39% vs 13.21% F1 in Protocol B) while completely preserving privacy.
-    *   **Literature Discrepancy Revealed:** In balanced benchmark testing (Protocol B), precision reaches 57.20%, proving literature figures (~95%) stem from artificial 50/50 balanced test sets rather than realistic deployment (~10% attack prevalence).
-    *   **Scientific Need for Step 4:** Static anomaly detection rates drop across evolving attack phases (8%–15%), establishing the critical empirical necessity for Step 4 (Continual Learning).
+#### Step 3: Privacy-Aware Collaboration (Federated Learning) **[AI] & [Cybersecurity]** — [✅ COMPLETED & EMPIRICALLY VERIFIED]
+*   **Status:** Complete. Scaled to all 299 prosumers under a dual-protocol regime (Protocol A & Protocol B) with 3 model architectures, paired Wilcoxon hypothesis testing, and 16 IEEE publication figures (`Step 3/outputs/figures/`).
+*   **Input:** Local model weights from smart meters across the community ($100\%$ data locality; $0$ bytes of raw consumer telemetry exchanged; $1.67\text{ GB}$ total 30-round community communication).
+*   **Action:** Deployed Federated Averaging (FedAvg, 30 communication rounds, 1 local epoch/round) across all 299 prosumer nodes. Evaluated across three deep autoencoder architectures:
+    1. `Conv-AE v1` ($4,418$ params) — Step 2 spatial ablation baseline.
+    2. `FC-AE` ($17,712$ params) — Literature benchmark replication from Alshehri et al. (*Sensors* 2024).
+    3. `Conv-AE v2` ($23,258$ params) — **Our proposed 1-D CNN with a 24-dimensional bottleneck (Ours)**.
+*   **Dual Evaluation Protocols & Empirical Findings:**
+    *   **Protocol B (Literature Benchmark SOTA Validation — WINNER)**:
+        *   Evaluated on balanced 50/50 test sets against standard theft cyberattacks ($f_1$ to $f_6$) matching Alshehri et al. (2024, Table 2).
+        *   **Replication of Paper B1 Baseline (`FC-AE`)**: Achieves **$85.40\%$ DR** and **$84.38\%$ F1**, faithfully reproducing published benchmark metrics ($85.51\%$ DR / $82.48\%$ F1).
+        *   **Proposed Model (`Conv-AE v2`) Dominance**: Reaches **$92.46\%$ Detection Rate**, **$91.88\%$ Precision**, **$92.13\%$ F1-score**, **$92.11\%$ Accuracy**, and **$97.64\%$ AUROC**.
+        *   **Decisive Margin Over Benchmark Paper**: **$+6.95\%$ DR**, **$+9.65\%$ F1**, **$+11.87\%$ Precision**, and False Alarm cut by over half ($8.24\%$ vs $17.17\%$).
+        *   **Statistical Superiority ($p = 6.16 \times 10^{-47}$)**: Federated Conv-AE v2 beats Local defense on **$282 \text{ of } 299$ prosumers** with Wilcoxon significance.
+        *   **Near-Zero Privacy Penalty**: Federated learning matches Centralized training ($92.13\%$ vs $92.61\%$ F1, gap $< 0.5$ pts) while keeping raw data strictly local.
+    *   **Protocol A (Realistic Chronological Deployment — The Core Research Paradox)**:
+        *   Evaluated chronologically across Years 2 & 3 on Step 1 Evolving FDIAs (natural ~10.8% attack prevalence; no future data leakage).
+        *   Federated Conv-AE achieves $11.78\%$ F1, statistically outperforming Local defense on $176/299$ prosumers ($p = 4.10 \times 10^{-7}$).
+        *   Exposes the critical blindspot of static autoencoders: detection drops on subtle ramps ($5.9\%$ DR) and collapses to $0.0\%$ DR on Phase 4A replay attacks (because authentic historical days produce valid waveforms).
+*   **Scientific Contribution & Handoff to Step 4 & Step 5**:
+    *   The empirical divergence between Protocol B ($92.1\%$ F1) and Protocol A ($11.8\%$ F1) proves that existing smart-grid literature lives in an artificial bubble of gross synthetic cuts.
+    *   This establishes the fundamental scientific justification of our entire paper: static physical detectors cannot withstand stealthy evolving FDIAs alone, mandating **Step 4 (Continual Federated Learning)** to track non-stationary drifts and **Step 5 (Cyber-Economic Cross-Layer Verification)** to unmask replay and market collusion via P2P market clearing signals.
+*   **Outputs & Deliverables:**
+    *   Model checkpoints: `checkpoints/federated_conv2_A.pt`, `federated_conv2_B.pt`, `centralized_conv2_A.pt`, `centralized_conv2_B.pt`, `local_conv2_A.pt`, `local_conv2_B.pt`, `federated_fcae_B.pt`.
+    *   Master reference dossier: [`Step 3/step_3_master_reference.md`](Step%203/step_3_master_reference.md).
+    *   All 16 IEEE publication figures: [`Step 3/outputs/figures/`](Step%203/outputs/figures/) in vector `.pdf` and 300 DPI `.png`.
+    *   CSV scorecards: `step3_summary.csv`, `step3_stats.csv`, `step3_phase_detection.csv`, `step3_per_customer_metrics.csv` (7,176 client evaluation rows).
 
 #### Step 4: Adapting to New Threats (Continual Learning) **[AI]** — [⏳ NEXT]
 *   **Input:** Successive chronological attack phases over the 3-year timeline (Scaling $\rightarrow$ Ramp $\rightarrow$ Replay $\rightarrow$ Coordinated).
