@@ -1,0 +1,7 @@
+{
+  "model": "conv2",
+  "protocol": "A",
+  "pooled_windows": 91195,
+  "final_val_mse": 0.001102904384421577,
+  "minutes": 17.771167012055717
+}

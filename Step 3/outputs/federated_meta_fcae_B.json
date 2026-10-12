@@ -1,0 +1,13 @@
+{
+  "model": "fcae",
+  "protocol": "B",
+  "params": 17712,
+  "clients": 299,
+  "rounds": 30,
+  "local_epochs": 1,
+  "traffic_MB_total": 1271.01312,
+  "traffic_KB_per_client_per_round": 141.696,
+  "final_val_mse": 0.004971510943639942,
+  "minutes": 21.414502330621083,
+  "raw_bytes_shared": 0
+}

@@ -1,56 +1,7 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual environments
 .venv/
-venv/
-ENV/
-env/
-
-# IDE and Editor settings
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-.DS_Store
-Thumbs.db
-
-# Large Datasets & Archives (> 100 MB / raw & processed telemetry)
-# Excluded from git; see data/raw/README.md and data/processed/README.md
-*.csv
-*.parquet
-*.zip
-*.ZIP
-*.tar.gz
-*.tgz
-*.7z
-
-# Exception: keep READMEs and .gitkeep files in data directories
-!**/*.md
-!**/.gitkeep
+__pycache__/
+*.pt
+*.pkl
+Step 1/DATA/
+Step 3/outputs/cache_299.pt
+Step 3/outputs/overnight_run.log

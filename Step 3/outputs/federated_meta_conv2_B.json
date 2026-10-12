@@ -1,0 +1,13 @@
+{
+  "model": "conv2",
+  "protocol": "B",
+  "params": 23258,
+  "clients": 299,
+  "rounds": 30,
+  "local_epochs": 1,
+  "traffic_MB_total": 1668.99408,
+  "traffic_KB_per_client_per_round": 186.064,
+  "final_val_mse": 0.0025361596770186907,
+  "minutes": 29.558317466576895,
+  "raw_bytes_shared": 0
+}

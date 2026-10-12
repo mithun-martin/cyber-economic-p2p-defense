@@ -1,0 +1,7 @@
+{
+  "model": "fcae",
+  "protocol": "B",
+  "pooled_windows": 179531,
+  "final_val_mse": 0.002446085795853642,
+  "minutes": 15.28168627023697
+}
