@@ -82,7 +82,8 @@ def main():
                 local_net.load_state_dict(local_states[cid])
                 for method in METHODS:
                     net = local_net if method == "Local" else nets[method]
-                    res = evaluate_customer(net, X[k], y[k], phase[k], splits[k])
+                    res = evaluate_customer(net, X[k], y[k], phase[k], splits[k],
+                                            protocol=protocol, method=method, model_name=model, customer_id=cid)
                     for s in SCORES:
                         r = res[s]
                         rows.append({"protocol": protocol, "model": model, "method": method, "score": s,
