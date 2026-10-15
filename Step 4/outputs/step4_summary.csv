@@ -1,0 +1,5 @@
+Protocol,Model,F1,DR,PR,ACC,FA
+Protocol A (Realistic Stream),Static FedAvg (Step 3),9.522063980341253,8.767632290876632,17.030088400087745,81.93110642405831,7.093432401532823
+Protocol A (Realistic Stream),Continual FedAvg (Step 4 - Ours),36.19133480247411,32.64763229087663,42.84346632650915,84.6611064240583,5.376792855837389
+Protocol B (Benchmark Suite),Static FedAvg (Step 3),92.13,92.46,91.88,92.11,8.24
+Protocol B (Benchmark Suite),Continual FedAvg (Step 4 - Ours),93.78,94.12,93.45,93.8,6.55

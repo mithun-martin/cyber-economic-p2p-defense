@@ -1,0 +1,2 @@
+Comparison,Wilcoxon_p_value,Significant,Prosumer_Wins
+Continual FedAvg vs Static FedAvg (Protocol A),4.422906449226064e-51,True,299 / 299 (100.0%)
