@@ -1,0 +1,11 @@
+Check_ID,Check_Name,Condition,Observed,Status
+CHK-01,Population_and_Slots_Coverage,"Exactly 671 days x 48 slots x 4 regimes = 128,832 intervals","128,832 intervals across 4 regimes",PASS
+CHK-02,Sign_Conventions_and_Epsilon,"Demand >= 0, Supply >= 0, N_buyers + N_sellers + N_inactive == 299","All non-negative; total participants exactly 299 across all 128,832 slots",PASS
+CHK-03,Non_Negative_Trades_No_Overfills,"0 <= E_P2P <= min(Demand, Supply) for every slot",Max matched volume 74.4000 kWh strictly within bounds,PASS
+CHK-04,Energy_Conservation_Equations,|E_P2P + Unmet - Demand| < 1e-7 and |E_P2P + Unmatched - Supply| < 1e-7,"Max demand error: 5.68e-14 kWh, Max supply error: 9.31e-10 kWh",PASS
+CHK-05,Price_Boundaries_and_Crossing,FiT ($0.08) <= VWAP <= G_T ($0.30),"Min VWAP: $0.1141, Max VWAP: $0.2998",PASS
+CHK-06,Deterministic_Seed_Repeatability,Bitwise identical matched volume across repeated spot interval simulation,Spot check on Day 500 Slot 24: diff = 0.0e+00 kWh,PASS
+CHK-07,Quarantined_Labels_Anti_Leakage,Ground-truth attack labels quarantined exclusively for post-hoc metric accounting,Strict interface separation: CDAOrderBook receives only net position without attack labels,PASS
+CHK-08,Zero_Trade_Edge_Case_Handling,"When n_trades == 0, VWAP = $0.19, Surplus = $0.00, Matched = 0.00 kWh","62,648 zero-trade intervals; all correctly set VWAP=$0.19 and Surplus=$0.00",PASS
+CHK-09,Exact_Tariff_Surplus_Linearity,|W_P2P - (S_B + S_S)| < 1e-7 and |W_P2P - 0.22 * E_P2P| < 1e-7,"Max sum error: 0.00e+00 AUD, Max linear error: 3.55e-15 AUD",PASS
+CHK-10,Runtime_and_Memory_Feasibility,"Latency < 500 ms/day, Peak Memory < 3.0 GB","233.32 ms/day, Peak memory: 2307.49 MB",PASS

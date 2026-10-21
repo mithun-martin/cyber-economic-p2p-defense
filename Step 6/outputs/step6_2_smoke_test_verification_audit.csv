@@ -1,0 +1,11 @@
+Check_ID,Check_Name,Condition,Observed,Status
+CHK-01,Population_and_Slots_Coverage,Exactly 5 days x 48 slots x 4 regimes = 960 intervals,960 intervals across 4 regimes,PASS
+CHK-02,Sign_Conventions_and_Epsilon,"Demand >= 0, Supply >= 0, N_buyers + N_sellers + N_inactive == 299",All non-negative; total participants exactly 299 across all 960 slots,PASS
+CHK-03,Non_Negative_Trades_No_Overfills,"0 <= E_P2P <= min(Demand, Supply) for every slot",Max matched volume 31.0850 kWh strictly within bounds,PASS
+CHK-04,Energy_Conservation_Equations,|E_P2P + Unmet - Demand| < 1e-7 and |E_P2P + Unmatched - Supply| < 1e-7,"Max demand error: 1.42e-14 kWh, Max supply error: 1.42e-14 kWh",PASS
+CHK-05,Price_Boundaries_and_Crossing,FiT ($0.08) <= VWAP <= G_T ($0.30),"Min VWAP: $0.1340, Max VWAP: $0.2877",PASS
+CHK-06,Deterministic_Seed_Repeatability,Identical seeds yield identical trade logs across repeated executions,Bitwise match confirmed across 192 interval comparisons (diff = 0.0),PASS
+CHK-07,Quarantined_Labels_Anti_Leakage,"is_attacked_ground_truth excluded from order formation, pricing, and execution",Ground-truth labels passed only to post-hoc reporting block,PASS
+CHK-08,Zero_Trade_Edge_Case_Handling,"If E_P2P == 0, VWAP = $0.1900 and Surplus = $0.00",524 zero-trade slots; all correctly set VWAP=$0.19 and Surplus=$0.00,PASS
+CHK-09,Exact_Tariff_Surplus_Linearity,|W_P2P - (S_B + S_S)| < 1e-7 and |W_P2P - 0.22 * E_P2P| < 1e-7,"Max sum error: 0.00e+00 AUD, Max linear error: 8.88e-16 AUD",PASS
+CHK-10,Runtime_and_Memory_Feasibility,"Latency < 500 ms/day, Peak Memory < 2.5 GB","295.23 ms/day, Peak memory: 1761.76 MB",PASS

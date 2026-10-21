@@ -1,0 +1,256 @@
+{
+  "experiment_name": "Step 6.3 Full 671-Day CDA Evaluation",
+  "status": "COMPLETED",
+  "all_invariants_passed": true,
+  "timestamps": {
+    "start_time_utc": "2026-10-20 12:18:52 UTC",
+    "end_time_utc": "2026-10-20 12:21:29 UTC",
+    "total_wall_clock_seconds": 156.56,
+    "total_wall_clock_minutes": 2.61
+  },
+  "environment": {
+    "python_version": "3.14.7",
+    "os": "Linux-7.2.3-1-cachyos-x86_64-with-glibc2.44",
+    "cpu": "",
+    "peak_rss_memory_mb": 2307.49
+  },
+  "scope": {
+    "start_day": 425,
+    "end_day": 1095,
+    "n_days": 671,
+    "slots_per_day": 48,
+    "prosumer_cohort_size": 299,
+    "regimes": [
+      "CLEAN",
+      "REGIME_A",
+      "REGIME_B",
+      "REGIME_C"
+    ],
+    "total_sessions": 128832,
+    "total_customer_intervals_evaluated": 38520768
+  },
+  "tariffs": {
+    "retail_import_g_t_aud_per_kwh": 0.3,
+    "feed_in_fit_aud_per_kwh": 0.08,
+    "deadband_epsilon_kwh": 0.0001,
+    "tariff_spread_aud_per_kwh": 0.21999999999999997
+  },
+  "seed_hierarchy": {
+    "base_seed": 42,
+    "day_slot_seed_formula": "42 * 1000000 + day_index * 100 + slot_index",
+    "arrival_seed_offset": 10007,
+    "valuation_seed_offset": 20011,
+    "draw_matrix_shape": "[299, 2] (Column 0: Buyer, Column 1: Seller)"
+  },
+  "artifact_hashes": {
+    "pre_run": {
+      "frozen_benchmark": {
+        "path": "/home/scarlet/Documents/Sem 7/Major Project/data/processed/ausgrid_solar_attacked.parquet",
+        "expected_sha256": "176fa03152359472b544f2197427bca92f51127e4c2becad84e31ec72f6ca1b4",
+        "actual_sha256": "176fa03152359472b544f2197427bca92f51127e4c2becad84e31ec72f6ca1b4",
+        "status": "MATCH"
+      },
+      "detector_checkpoint": {
+        "path": "/home/scarlet/Documents/Sem 7/Major Project/Step 5/preflight/detector_checkpoint.pt",
+        "expected_sha256": "85e68a1b1da058cecf56829279e2af42872656e797581e81170f2f712f9fbbf2",
+        "actual_sha256": "85e68a1b1da058cecf56829279e2af42872656e797581e81170f2f712f9fbbf2",
+        "status": "MATCH"
+      },
+      "probability_calibrator": {
+        "path": "/home/scarlet/Documents/Sem 7/Major Project/Step 5/preflight/probability_calibrator.pkl",
+        "expected_sha256": "81f70abbe29e775ea064e5fd4c46858bcb158f0fdd93a2b0014627742ac4a158",
+        "actual_sha256": "81f70abbe29e775ea064e5fd4c46858bcb158f0fdd93a2b0014627742ac4a158",
+        "status": "MATCH"
+      }
+    },
+    "post_run": {
+      "frozen_benchmark": {
+        "path": "/home/scarlet/Documents/Sem 7/Major Project/data/processed/ausgrid_solar_attacked.parquet",
+        "expected_sha256": "176fa03152359472b544f2197427bca92f51127e4c2becad84e31ec72f6ca1b4",
+        "actual_sha256": "176fa03152359472b544f2197427bca92f51127e4c2becad84e31ec72f6ca1b4",
+        "status": "MATCH"
+      },
+      "detector_checkpoint": {
+        "path": "/home/scarlet/Documents/Sem 7/Major Project/Step 5/preflight/detector_checkpoint.pt",
+        "expected_sha256": "85e68a1b1da058cecf56829279e2af42872656e797581e81170f2f712f9fbbf2",
+        "actual_sha256": "85e68a1b1da058cecf56829279e2af42872656e797581e81170f2f712f9fbbf2",
+        "status": "MATCH"
+      },
+      "probability_calibrator": {
+        "path": "/home/scarlet/Documents/Sem 7/Major Project/Step 5/preflight/probability_calibrator.pkl",
+        "expected_sha256": "81f70abbe29e775ea064e5fd4c46858bcb158f0fdd93a2b0014627742ac4a158",
+        "actual_sha256": "81f70abbe29e775ea064e5fd4c46858bcb158f0fdd93a2b0014627742ac4a158",
+        "status": "MATCH"
+      }
+    }
+  },
+  "aggregate_results": [
+    {
+      "regime": "CLEAN",
+      "matched_volume_kWh": 224941.985,
+      "gross_tariff_surplus_aud": 49487.236699999994,
+      "buyer_surplus_aud": 26070.2829166908,
+      "seller_surplus_aud": 23416.953783309196,
+      "grid_import_cost_aud": 656196.6303,
+      "grid_export_revenue_aud": 27132.78424,
+      "net_grid_settlement_aud": 629063.84606,
+      "corrupted_raw_energy_cleared_kWh": 0.0,
+      "attack_targeted_interval_traded_energy_kWh": 19585.883,
+      "fallback_energy_traded_kWh": 0.0,
+      "clean_counterfactual_exposure_kWh": 19585.883,
+      "n_trades": 1746119,
+      "welfare_retention_rate_pct": 100.0,
+      "volume_retention_rate_pct": 100.0,
+      "volume_weighted_vwap_aud": 0.21999999999999997,
+      "overall_vwap_aud_per_kwh": 0.18410219231998506
+    },
+    {
+      "regime": "REGIME_A",
+      "matched_volume_kWh": 226312.63530195458,
+      "gross_tariff_surplus_aud": 49788.77976643,
+      "buyer_surplus_aud": 26284.42329536165,
+      "seller_surplus_aud": 23504.356471068353,
+      "grid_import_cost_aud": 652669.6689210043,
+      "grid_export_revenue_aud": 27689.91329264478,
+      "net_grid_settlement_aud": 624979.7556283595,
+      "corrupted_raw_energy_cleared_kWh": 21692.655885190354,
+      "attack_targeted_interval_traded_energy_kWh": 21692.655885190354,
+      "fallback_energy_traded_kWh": 0.0,
+      "clean_counterfactual_exposure_kWh": 0.0,
+      "n_trades": 1753225,
+      "welfare_retention_rate_pct": 100.60933502563098,
+      "volume_retention_rate_pct": 100.60933502563098,
+      "volume_weighted_vwap_aud": 0.21999999999999997,
+      "overall_vwap_aud_per_kwh": 0.18385790629722457
+    },
+    {
+      "regime": "REGIME_B",
+      "matched_volume_kWh": 178899.40819287498,
+      "gross_tariff_surplus_aud": 39357.86980243249,
+      "buyer_surplus_aud": 20850.602937673324,
+      "seller_surplus_aud": 18507.26686475917,
+      "grid_import_cost_aud": 627880.7785528253,
+      "grid_export_revenue_aud": 21851.7132246487,
+      "net_grid_settlement_aud": 606029.0653281766,
+      "corrupted_raw_energy_cleared_kWh": 0.0,
+      "attack_targeted_interval_traded_energy_kWh": 15923.914290224246,
+      "fallback_energy_traded_kWh": 178899.40819287498,
+      "clean_counterfactual_exposure_kWh": 0.0,
+      "n_trades": 1770992,
+      "welfare_retention_rate_pct": 79.53135480371749,
+      "volume_retention_rate_pct": 79.5313548037175,
+      "volume_weighted_vwap_aud": 0.21999999999999997,
+      "overall_vwap_aud_per_kwh": 0.18345068802466982
+    },
+    {
+      "regime": "REGIME_C",
+      "matched_volume_kWh": 183923.51469694055,
+      "gross_tariff_surplus_aud": 40463.17323332692,
+      "buyer_surplus_aud": 21804.096684551034,
+      "seller_surplus_aud": 18659.076548775884,
+      "grid_import_cost_aud": 576415.0642887201,
+      "grid_export_revenue_aud": 26568.76142292336,
+      "net_grid_settlement_aud": 549846.3028657967,
+      "corrupted_raw_energy_cleared_kWh": 5747.342555704687,
+      "attack_targeted_interval_traded_energy_kWh": 16460.304620825438,
+      "fallback_energy_traded_kWh": 167521.3696098586,
+      "clean_counterfactual_exposure_kWh": 0.0,
+      "n_trades": 1747714,
+      "welfare_retention_rate_pct": 81.76486692643908,
+      "volume_retention_rate_pct": 81.76486692643908,
+      "volume_weighted_vwap_aud": 0.21999999999999997,
+      "overall_vwap_aud_per_kwh": 0.18145019563986328
+    }
+  ],
+  "verification_audit": [
+    {
+      "Check_ID": "CHK-01",
+      "Check_Name": "Population_and_Slots_Coverage",
+      "Condition": "Exactly 671 days x 48 slots x 4 regimes = 128,832 intervals",
+      "Observed": "128,832 intervals across 4 regimes",
+      "Status": "PASS"
+    },
+    {
+      "Check_ID": "CHK-02",
+      "Check_Name": "Sign_Conventions_and_Epsilon",
+      "Condition": "Demand >= 0, Supply >= 0, N_buyers + N_sellers + N_inactive == 299",
+      "Observed": "All non-negative; total participants exactly 299 across all 128,832 slots",
+      "Status": "PASS"
+    },
+    {
+      "Check_ID": "CHK-03",
+      "Check_Name": "Non_Negative_Trades_No_Overfills",
+      "Condition": "0 <= E_P2P <= min(Demand, Supply) for every slot",
+      "Observed": "Max matched volume 74.4000 kWh strictly within bounds",
+      "Status": "PASS"
+    },
+    {
+      "Check_ID": "CHK-04",
+      "Check_Name": "Energy_Conservation_Equations",
+      "Condition": "|E_P2P + Unmet - Demand| < 1e-7 and |E_P2P + Unmatched - Supply| < 1e-7",
+      "Observed": "Max demand error: 5.68e-14 kWh, Max supply error: 9.31e-10 kWh",
+      "Status": "PASS"
+    },
+    {
+      "Check_ID": "CHK-05",
+      "Check_Name": "Price_Boundaries_and_Crossing",
+      "Condition": "FiT ($0.08) <= VWAP <= G_T ($0.30)",
+      "Observed": "Min VWAP: $0.1141, Max VWAP: $0.2998",
+      "Status": "PASS"
+    },
+    {
+      "Check_ID": "CHK-06",
+      "Check_Name": "Deterministic_Seed_Repeatability",
+      "Condition": "Bitwise identical matched volume across repeated spot interval simulation",
+      "Observed": "Spot check on Day 500 Slot 24: diff = 0.0e+00 kWh",
+      "Status": "PASS"
+    },
+    {
+      "Check_ID": "CHK-07",
+      "Check_Name": "Quarantined_Labels_Anti_Leakage",
+      "Condition": "Ground-truth attack labels quarantined exclusively for post-hoc metric accounting",
+      "Observed": "Strict interface separation: CDAOrderBook receives only net position without attack labels",
+      "Status": "PASS"
+    },
+    {
+      "Check_ID": "CHK-08",
+      "Check_Name": "Zero_Trade_Edge_Case_Handling",
+      "Condition": "When n_trades == 0, VWAP = $0.19, Surplus = $0.00, Matched = 0.00 kWh",
+      "Observed": "62,648 zero-trade intervals; all correctly set VWAP=$0.19 and Surplus=$0.00",
+      "Status": "PASS"
+    },
+    {
+      "Check_ID": "CHK-09",
+      "Check_Name": "Exact_Tariff_Surplus_Linearity",
+      "Condition": "|W_P2P - (S_B + S_S)| < 1e-7 and |W_P2P - 0.22 * E_P2P| < 1e-7",
+      "Observed": "Max sum error: 0.00e+00 AUD, Max linear error: 3.55e-15 AUD",
+      "Status": "PASS"
+    },
+    {
+      "Check_ID": "CHK-10",
+      "Check_Name": "Runtime_and_Memory_Feasibility",
+      "Condition": "Latency < 500 ms/day, Peak Memory < 3.0 GB",
+      "Observed": "233.32 ms/day, Peak memory: 2307.49 MB",
+      "Status": "PASS"
+    }
+  ],
+  "detector_diagnostics": {
+    "calibrator_artifact": "Step 5/preflight/probability_calibrator.pkl",
+    "calibrator_sha256": "81f70abbe29e775ea064e5fd4c46858bcb158f0fdd93a2b0014627742ac4a158",
+    "threshold": 0.5,
+    "operator": ">=",
+    "total_intervals": 9630192,
+    "total_attacked_ground_truth": 501875,
+    "total_clean_ground_truth": 9128317,
+    "true_positives_TP": 265584,
+    "false_positives_FP": 3597581,
+    "true_negatives_TN": 5530736,
+    "false_negatives_FN": 236291,
+    "mitigation_count": 3863165,
+    "mitigation_rate_pct": 40.11513996813355,
+    "precision_pct": 6.874777546390072,
+    "recall_pct": 52.91835616438356,
+    "false_positive_rate_pct": 39.41121895744856,
+    "accuracy_pct": 60.189038806287556
+  }
+}

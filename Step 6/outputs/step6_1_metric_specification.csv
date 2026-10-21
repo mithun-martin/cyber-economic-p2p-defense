@@ -1,0 +1,21 @@
+Metric_ID,Category,Metric_Name,Mathematical_Formula,Physical_Units,Aggregation_Level,Optimization_Direction,Edge_Case_Handling
+MTR-01,Market_Volume,Matched_P2P_Volume,"E_p2p = sum_{k in Trades} Q_k",kWh,Interval / Daily / Period,Higher,Zero if no trades occur.
+MTR-02,Market_Volume,Unmet_Buyer_Demand,"E_unmet_B = sum_{i in Buyers} Q_i - E_p2p",kWh,Interval / Daily / Period,Lower,Equals total demand if no trades occur.
+MTR-03,Market_Volume,Unmatched_Seller_Supply,"E_unmatched_S = sum_{j in Sellers} Q_j - E_p2p",kWh,Interval / Daily / Period,Lower,Equals total supply if no trades occur.
+MTR-04,Market_Volume,Market_Match_Rate,"Match_Rate = E_p2p / min(sum Q_B, sum Q_A) * 100",Percent (%),Interval / Daily / Period,Higher,0.0% if min(supply, demand) == 0.
+MTR-05,Market_Volume,Active_Participation_Rate,"Part_Rate = N_active_traders / N_total_prosumers * 100",Percent (%),Interval / Daily / Period,Context-dependent,Evaluated against 299 prosumers.
+MTR-06,Market_Pricing,Volume_Weighted_Average_Price,"VWAP = sum_{k} (P_k * Q_k) / E_p2p",AUD ($) / kWh,Interval / Daily / Period,Neutral (Fairness),Set to Midpoint (G_T + FiT)/2 = $0.19/kWh if E_p2p == 0.
+MTR-07,Market_Pricing,Price_Spread_Divergence,"Delta_P = VWAP_regime - VWAP_clean",AUD ($) / kWh,Interval / Daily / Period,Lower (Closer to zero),0.0 if both regimes have zero trades.
+MTR-08,Economic_Welfare,Buyer_Surplus,"S_B = sum_{k} (G_T - P_k) * Q_k",AUD ($),Interval / Daily / Period,Higher,0.0 if no trades occur.
+MTR-09,Economic_Welfare,Seller_Surplus,"S_S = sum_{k} (P_k - FiT) * Q_k",AUD ($),Interval / Daily / Period,Higher,0.0 if no trades occur.
+MTR-10,Economic_Welfare,Gross_Tariff_Surplus_Proxy,"W_p2p = S_B + S_S = (G_T - FiT) * E_p2p",AUD ($),Interval / Daily / Period,Higher,0.0 if no trades occur. Tariff-based gross surplus proxy under modeled flat tariffs ($0.22/kWh).
+MTR-11,Economic_Welfare,Welfare_Retention_Rate,"Welfare_Retention = W_p2p_regime / W_p2p_clean * 100",Percent (%),Period,Higher (Target 100%),100% if clean welfare == 0.
+MTR-12,Economic_Welfare,Gini_Coefficient_of_Savings,"Gini = sum_i sum_j |Delta_Bill_i - Delta_Bill_j| / (2 * N * sum_i Delta_Bill_i)",Dimensionless [0, 1],Period,Lower (Equitable distribution),0.0 if all prosumers receive equal savings.
+MTR-13,Grid_Interaction,Net_Grid_Import_Volume,"E_grid_import = sum_{i} max(0, GC_i - GG_i) - E_p2p",kWh,Interval / Daily / Period,Lower,Equals total net deficit if no P2P trades.
+MTR-14,Grid_Interaction,Grid_Energy_Divergence,"Delta_E_grid = sum_{t} |E_grid_regime(t) - E_grid_clean(t)|",kWh,Daily / Period,Lower,0.0 under perfect physical reconstruction.
+MTR-15,Grid_Interaction,Grid_Settlement_Cost,"Cost_grid = E_unmet_B * G_T - E_unmatched_S * FiT",AUD ($),Interval / Daily / Period,Lower,Standard baseline grid bill.
+MTR-16,Cyber_Resilience,Attack_Volume_Cleared_on_Market,"Q_attack_cleared = sum_{k in Attacked_Trades} Q_k",kWh,Interval / Daily / Period,Lower (Target 0),0.0 if all attacks mitigated or no trades.
+MTR-17,Cyber_Resilience,Market_Mitigation_Rate,"Mit_Rate = N_mitigated_intervals / N_total_intervals * 100",Percent (%),Daily / Period,Context-dependent,Verified 41.9258% for Regime C (tau=0.50), 0% Regime A, 100% Regime B.
+MTR-18,Cyber_Resilience,Realized_Cyber_Cost,"Cost_cyber = FN * C_FN + FP * C_FP + N_mit * C_M",AUD ($),Period,Lower,Calculated using Step 5 baseline costs ($0.50, $0.10, $0.01).
+MTR-19,Cyber_Resilience,Net_Cyber_Economic_Resilience,"Resilience_Net = W_p2p - Cost_cyber - Grid_Divergence_Penalty",AUD ($),Period,Higher,Exploratory composite index reported with additive component breakdown.
+MTR-20,Computational,Per_Day_Simulation_Latency,"Latency = Runtime_sec / N_simulated_days * 1000",Milliseconds (ms) / day,Daily / Period,Lower,Measured via time.time() per trading day.

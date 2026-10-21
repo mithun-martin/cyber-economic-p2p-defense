@@ -1,0 +1,2 @@
+calibrator_artifact,calibrator_sha256,threshold,operator,total_intervals,total_attacked_ground_truth,total_clean_ground_truth,true_positives_TP,false_positives_FP,true_negatives_TN,false_negatives_FN,mitigation_count,mitigation_rate_pct,precision_pct,recall_pct,false_positive_rate_pct,accuracy_pct
+Step 5/preflight/probability_calibrator.pkl,81f70abbe29e775ea064e5fd4c46858bcb158f0fdd93a2b0014627742ac4a158,0.5,>=,9630192,501875,9128317,265584,3597581,5530736,236291,3863165,40.11513996813355,6.874777546390072,52.91835616438356,39.41121895744856,60.189038806287556

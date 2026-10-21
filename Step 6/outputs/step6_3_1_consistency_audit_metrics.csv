@@ -1,0 +1,16 @@
+Check_Category,Metric,Original_Step6_3,Verified_Authoritative,Discrepancy_Type,Impact
+Attack_Labels,Total_Benchmark_Attacks,501875,446571,Reporting_Only,"None on simulation; engine used 404,327 test attacks"
+Attack_Labels,Test_Partition_Attacks,501875,404327,Reporting_Only,"None on simulation; engine used 404,327 test attacks"
+Attack_Labels,Regime_C_Mitigations,3863165,4037535,Reporting_Only,"None on simulation; engine used 4,037,535 mitigations"
+Attack_Labels,Regime_C_TP,265584,181721,Reporting_Only,Diagnostic table only
+Attack_Labels,Regime_C_FP,3597581,3855814,Reporting_Only,Diagnostic table only
+Attack_Labels,Regime_C_TN,5530736,5370051,Reporting_Only,Diagnostic table only
+Attack_Labels,Regime_C_FN,236291,222606,Reporting_Only,Diagnostic table only
+Attack_Labels,Regime_C_Recall,52.918,44.944,Reporting_Only,Diagnostic table only
+Attack_Labels,Regime_C_Precision,6.875,4.501,Reporting_Only,Diagnostic table only
+Environment,Python_Version,3.14.0,3.14.7,Reporting_Only,Report boilerplate string mismatch with manifest
+Environment,OS_Platform,Linux 6.8.0-52-generic,Linux-7.2.3-1-cachyos-x86_64-with-glibc2.44,Reporting_Only,Report boilerplate string mismatch with manifest
+Field_Semantics,volume_weighted_vwap_aud,0.22,Unit tariff surplus (bash.22/kWh),Field_Naming_Only,True VWAP preserved under overall_vwap_aud_per_kwh
+Causal_Claim,Net_Phantom_Trading_Volume,"+2,106.78 kWh","Attribution difference; net market delta is +1,370.65 kWh",Interpretation_Correction,Causal claim must be toned down; order displacement confirmed
+Simulation_Integrity,10_Smoke_Invariants,ALL PASS,ALL PASS,None,Simulation fully valid
+Simulation_Integrity,Frozen_Artifact_Hashes,MATCH,MATCH,None,Bitwise preservation verified
