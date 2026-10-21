@@ -1,0 +1,130 @@
+{
+  "calibrator_type": "PlattScaling",
+  "model_architecture": "ConvAE_v2",
+  "parameter_count": 23258,
+  "feature_order": [
+    "Channel 0: GC_attacked (kWh)",
+    "Channel 1: GG_attacked (kWh)"
+  ],
+  "input_tensor_shape": [
+    1,
+    2,
+    48
+  ],
+  "normalization": "MinMax per-customer fitted on Phase 1 (Days 0-364)",
+  "reconstruction_error_formula": "max_{t in 1..48} (0.5 * [(GC - GC_hat)^2 + (GG - GG_hat)^2])",
+  "feature_transformation": "ln(error + 1e-12)",
+  "platt_coefficients": {
+    "weight_w": 0.19306997954845428,
+    "bias_b": 0.6285280585289001,
+    "sigmoid_formula": "1.0 / (1.0 + exp(-(w * ln(error + 1e-12) + b)))"
+  },
+  "temporal_partitions": {
+    "autoencoder_training": "Days 0 to 304 (305 clean baseline days)",
+    "clean_validation": "Days 305 to 364 (60 clean baseline days)",
+    "calibration_set": "Days 305 to 424 (120 days: 60 clean + 60 early scaling attacks)",
+    "final_test_set": "Days 425 to 1095 (671 out-of-time days: late scaling, ramp, replay, coordinated)"
+  },
+  "performance_metrics": {
+    "calib_brier_score": 0.24794791638851166,
+    "calib_log_loss": 0.6889632940292358,
+    "calib_ece": 0.4306733319932468,
+    "calib_auroc": 0.5501578806985963,
+    "test_brier_score": 0.23944249749183655,
+    "test_log_loss": 0.6718720197677612,
+    "test_ece": 0.3535392860604619,
+    "test_auroc": 0.5224512693848522
+  },
+  "reliability_bins_test": [
+    {
+      "bin": 0,
+      "bin_min": 0.0,
+      "bin_max": 0.1,
+      "count": 0,
+      "mean_predicted_prob": 0.05,
+      "empirical_positive_rate": 0.0,
+      "abs_calibration_gap": 0.0
+    },
+    {
+      "bin": 1,
+      "bin_min": 0.1,
+      "bin_max": 0.2,
+      "count": 0,
+      "mean_predicted_prob": 0.15000000000000002,
+      "empirical_positive_rate": 0.0,
+      "abs_calibration_gap": 0.0
+    },
+    {
+      "bin": 2,
+      "bin_min": 0.2,
+      "bin_max": 0.30000000000000004,
+      "count": 0,
+      "mean_predicted_prob": 0.25,
+      "empirical_positive_rate": 0.0,
+      "abs_calibration_gap": 0.0
+    },
+    {
+      "bin": 3,
+      "bin_min": 0.30000000000000004,
+      "bin_max": 0.4,
+      "count": 6355,
+      "mean_predicted_prob": 0.38139936327934265,
+      "empirical_positive_rate": 0.11549960660896931,
+      "abs_calibration_gap": 0.26589975667037336
+    },
+    {
+      "bin": 4,
+      "bin_min": 0.4,
+      "bin_max": 0.5,
+      "count": 124204,
+      "mean_predicted_prob": 0.46329912543296814,
+      "empirical_positive_rate": 0.12576889633184116,
+      "abs_calibration_gap": 0.33753022910112696
+    },
+    {
+      "bin": 5,
+      "bin_min": 0.5,
+      "bin_max": 0.6000000000000001,
+      "count": 69489,
+      "mean_predicted_prob": 0.528770387172699,
+      "empirical_positive_rate": 0.1395472664738304,
+      "abs_calibration_gap": 0.38922312069886855
+    },
+    {
+      "bin": 6,
+      "bin_min": 0.6000000000000001,
+      "bin_max": 0.7000000000000001,
+      "count": 581,
+      "mean_predicted_prob": 0.6129267811775208,
+      "empirical_positive_rate": 0.14629948364888123,
+      "abs_calibration_gap": 0.4666272975286395
+    },
+    {
+      "bin": 7,
+      "bin_min": 0.7000000000000001,
+      "bin_max": 0.8,
+      "count": 0,
+      "mean_predicted_prob": 0.75,
+      "empirical_positive_rate": 0.0,
+      "abs_calibration_gap": 0.0
+    },
+    {
+      "bin": 8,
+      "bin_min": 0.8,
+      "bin_max": 0.9,
+      "count": 0,
+      "mean_predicted_prob": 0.8500000000000001,
+      "empirical_positive_rate": 0.0,
+      "abs_calibration_gap": 0.0
+    },
+    {
+      "bin": 9,
+      "bin_min": 0.9,
+      "bin_max": 1.0,
+      "count": 0,
+      "mean_predicted_prob": 0.95,
+      "empirical_positive_rate": 0.0,
+      "abs_calibration_gap": 0.0
+    }
+  ]
+}

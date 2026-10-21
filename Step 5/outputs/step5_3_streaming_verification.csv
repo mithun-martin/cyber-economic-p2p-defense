@@ -1,0 +1,13 @@
+Check_Item,Expected_Value,Observed_Value,Status
+Total_Evaluated_Intervals,9630192,9630192,PASS
+Daily_Batch_Size_Records,14352,14352,PASS
+Evaluated_Test_Days,671,671,PASS
+Duplicate_Composite_Keys,0,0,PASS
+Chronological_Sequence,Monotonic 425 to 1095,Monotonic 425 to 1095,PASS
+Strict_Causal_Fallback,Prior 7 days d'<d strictly,Prior 7 days d'<d strictly,PASS
+Telemetry_Conservation,Raw unmodified; sub on MITIGATE,Raw unmodified; sub on MITIGATE,PASS
+Information_Isolation,Zero ground-truth in CDA orders,Zero ground-truth in CDA orders,PASS
+Market_Role_Sign_Convention,"+Pnet=BUYER, -Pnet=SELLER","+Pnet=BUYER, -Pnet=SELLER",PASS
+Total_Elapsed_Runtime_Sec,< 30.0 sec,311.03,PASS
+Per_Day_Batch_Latency_ms,< 25.0 ms/day,463.53,PASS
+Peak_Memory_Traced_MB,< 2000.0 MB,318.34,PASS

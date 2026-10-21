@@ -1,0 +1,93 @@
+# ==============================================================================
+# STEP 5 CONFIGURATION: ECONOMIC DECISION ENGINE & SENSITIVITY SCENARIOS
+# ==============================================================================
+# All monetary figures are in Australian Dollars (AUD, $) per 30-minute interval.
+# Cost parameters are experimental assumptions based on Australian residential
+# retail tariffs (G_T ≈ $0.30/kWh) and solar feed-in tariffs (FiT ≈ $0.08/kWh).
+# ==============================================================================
+
+reproducibility:
+  seed: 42
+  device: "cuda"  # Auto-falls back to cpu if cuda unavailable
+
+paths:
+  frozen_benchmark: "data/processed/ausgrid_solar_attacked.parquet"
+  preflight_cache: "Step 5/preflight/cache_299.pt"
+  detector_checkpoint: "Step 5/preflight/detector_checkpoint.pt"
+  interval_calibrator: "Step 5/preflight/interval_calibrator.pkl"
+  daily_calibrator: "Step 5/preflight/probability_calibrator.pkl"
+  normalization_bounds: "Step 5/preflight/normalization_bounds.json"
+  outputs_dir: "Step 5/outputs"
+  reports_dir: "Step 5/reports"
+
+tariffs_context:
+  currency: "AUD"
+  retail_consumption_tariff_per_kwh: 0.30
+  feed_in_tariff_per_kwh: 0.08
+  estimated_p2p_clearing_price_per_kwh: 0.19
+  notes: "Reference values from Ausgrid network pricing; used for cost rationale only, not simulated trades."
+
+# Baseline Scenario (Default for Primary Decision Engine)
+baseline_costs:
+  name: "Scenario 1 (Baseline: Asymmetric Risk 5:1)"
+  C_FN: 0.50   # Financial harm of unmitigated attack (grid imbalance penalty & settlement divergence)
+  C_FP: 0.10   # Opportunity cost of unnecessary fallback on honest prosumer (forfeited P2P surplus)
+  C_M: 0.01    # Computational/administrative overhead of activating fallback substitution
+  description: "Standard cyber-economic resilience regime where undetected attacks cost ~5x more than false alarms."
+
+# Sensitivity Scenarios to Evaluate Economic Behavior
+sensitivity_scenarios:
+  - id: "scenario_1_baseline"
+    name: "Baseline Asymmetric Risk (5:1)"
+    C_FN: 0.50
+    C_FP: 0.10
+    C_M: 0.01
+    description: "Standard reference regime: C_FN/C_FP = 5.0."
+
+  - id: "scenario_2_high_penalty"
+    name: "High Attack Consequence (10:1)"
+    C_FN: 1.00
+    C_FP: 0.10
+    C_M: 0.01
+    description: "Severe financial or reliability penalty for unmitigated attacks; drives proactive mitigation."
+
+  - id: "scenario_3_balanced"
+    name: "Symmetric / Balanced Risk (1:1)"
+    C_FN: 0.20
+    C_FP: 0.20
+    C_M: 0.01
+    description: "Equal economic weight on false negatives and false positives."
+
+  - id: "scenario_4_cautious_mitigation"
+    name: "High False Alarm Penalty (1:5)"
+    C_FN: 0.10
+    C_FP: 0.50
+    C_M: 0.01
+    description: "Trader welfare prioritized; heavy penalty for unnecessarily overriding honest prosumers."
+
+  - id: "scenario_5_high_overhead"
+    name: "High Administrative Overhead"
+    C_FN: 0.50
+    C_FP: 0.10
+    C_M: 0.15
+    description: "High friction/overhead C_M suppresses marginal mitigations unless threat probability is very high."
+
+# Baseline Policies for Comparison
+fixed_threshold_policy:
+  primary_threshold: 0.50
+  secondary_thresholds: [0.30, 0.70]
+  description: "Fixed probability cutoff: MITIGATE if p_attack >= threshold, ignoring financial asymmetry."
+
+# Trailing Historical Fallback Configuration
+fallback_baseline:
+  trailing_days: 7
+  window_intervals: 48
+  min_available_days: 1
+  cold_start_fallback_strategy: "phase1_slot_mean"
+  notes: "Calculated strictly using historical intervals preceding current day (zero future lookahead)."
+
+# Output Configuration
+output_settings:
+  save_sample_parquet: true
+  sample_customers_count: 10
+  save_summary_csv: true

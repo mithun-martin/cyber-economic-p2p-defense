@@ -5,3 +5,17 @@ __pycache__/
 Step 1/DATA/
 Step 3/outputs/cache_299.pt
 Step 3/outputs/overnight_run.log
+
+# Large datasets, local archives, and raw benchmarks (>100MB)
+Resources/
+data/
+*.zip
+Step 2 Handoff/
+Step 1/data/processed/ausgrid_solar_attacked.*
+Step 1/data/processed/ausgrid_solar_processed.*
+
+# Redundant root mirrors (authoritative files live under Step 1/, Step 5/, Step 6/)
+/Planning/
+/configs/
+/outputs/
+/src/
